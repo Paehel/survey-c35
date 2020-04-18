@@ -219,7 +219,7 @@ p5.prototype._ontouchstart = function(e) {
     if (executeDefault === false) {
       e.preventDefault();
     }
-    //this._setMouseButton(e);
+    //this._setMousesubmit(e);
   }
 };
 
@@ -297,7 +297,7 @@ p5.prototype._onmousedown = function(e) {
   var executeDefault;
   this._setProperty('isMousePressed', true);
   this._setProperty('mouseIsPressed', true);
-  this._setMouseButton(e);
+  this._setMousesubmit(e);
   this._updateNextMouseCoords(e);
   this._updateNextTouchCoords(e);
   if (typeof context.mousePressed === 'function') {
@@ -613,9 +613,9 @@ defineLazyP5Property('allSprites', function() {
   return new p5.prototype.Group();
 });
 
-p5.prototype._mouseButtonIsPressed = function(buttonCode) {
-  return (this.mouseIsPressed && this.mouseButton === buttonCode) ||
-    (this.touchIsDown && buttonCode === this.LEFT);
+p5.prototype._mousesubmitIsPressed = function(submitCode) {
+  return (this.mouseIsPressed && this.mousesubmit === submitCode) ||
+    (this.touchIsDown && submitCode === this.LEFT);
 };
 
 p5.prototype.mouseDidMove = function() {
@@ -1069,108 +1069,108 @@ p5.prototype._isKeyInState = function(key, state) {
 };
 
 /**
-* Detects if a mouse button is currently down
-* Combines mouseIsPressed and mouseButton of p5
+* Detects if a mouse submit is currently down
+* Combines mouseIsPressed and mousesubmit of p5
 *
 * @method mouseDown
-* @param {Number} [buttonCode] Mouse button constant LEFT, RIGHT or CENTER
-* @return {Boolean} True if the button is down
+* @param {Number} [submitCode] Mouse submit constant LEFT, RIGHT or CENTER
+* @return {Boolean} True if the submit is down
 */
-p5.prototype.mouseDown = function(buttonCode) {
-  return this._isMouseButtonInState(buttonCode, KEY_IS_DOWN);
+p5.prototype.mouseDown = function(submitCode) {
+  return this._isMousesubmitInState(submitCode, KEY_IS_DOWN);
 };
 
 /**
-* Detects if a mouse button is currently up
-* Combines mouseIsPressed and mouseButton of p5
+* Detects if a mouse submit is currently up
+* Combines mouseIsPressed and mousesubmit of p5
 *
 * @method mouseUp
-* @param {Number} [buttonCode] Mouse button constant LEFT, RIGHT or CENTER
-* @return {Boolean} True if the button is up
+* @param {Number} [submitCode] Mouse submit constant LEFT, RIGHT or CENTER
+* @return {Boolean} True if the submit is up
 */
-p5.prototype.mouseUp = function(buttonCode) {
-  return this._isMouseButtonInState(buttonCode, KEY_IS_UP);
+p5.prototype.mouseUp = function(submitCode) {
+  return this._isMousesubmitInState(submitCode, KEY_IS_UP);
 };
 
 /**
- * Detects if a mouse button was released during the last cycle.
+ * Detects if a mouse submit was released during the last cycle.
  * It can be used to trigger events once, to be checked in the draw cycle
  *
  * @method mouseWentUp
- * @param {Number} [buttonCode] Mouse button constant LEFT, RIGHT or CENTER
- * @return {Boolean} True if the button was just released
+ * @param {Number} [submitCode] Mouse submit constant LEFT, RIGHT or CENTER
+ * @return {Boolean} True if the submit was just released
  */
-p5.prototype.mouseWentUp = function(buttonCode) {
-  return this._isMouseButtonInState(buttonCode, KEY_WENT_UP);
+p5.prototype.mouseWentUp = function(submitCode) {
+  return this._isMousesubmitInState(submitCode, KEY_WENT_UP);
 };
 
 
 /**
- * Detects if a mouse button was pressed during the last cycle.
+ * Detects if a mouse submit was pressed during the last cycle.
  * It can be used to trigger events once, to be checked in the draw cycle
  *
  * @method mouseWentDown
- * @param {Number} [buttonCode] Mouse button constant LEFT, RIGHT or CENTER
- * @return {Boolean} True if the button was just pressed
+ * @param {Number} [submitCode] Mouse submit constant LEFT, RIGHT or CENTER
+ * @return {Boolean} True if the submit was just pressed
  */
-p5.prototype.mouseWentDown = function(buttonCode) {
-  return this._isMouseButtonInState(buttonCode, KEY_WENT_DOWN);
+p5.prototype.mouseWentDown = function(submitCode) {
+  return this._isMousesubmitInState(submitCode, KEY_WENT_DOWN);
 };
 
 /**
- * Returns a constant for a mouse state given a string or a mouse button constant.
+ * Returns a constant for a mouse state given a string or a mouse submit constant.
  *
  * @private
  * @method _clickKeyFromString
- * @param {Number|String} [buttonCode] Mouse button constant LEFT, RIGHT or CENTER
- *   or string 'leftButton', 'rightButton', or 'centerButton'
- * @return {Number} Mouse button constant LEFT, RIGHT or CENTER or value of buttonCode
+ * @param {Number|String} [submitCode] Mouse submit constant LEFT, RIGHT or CENTER
+ *   or string 'leftsubmit', 'rightsubmit', or 'centersubmit'
+ * @return {Number} Mouse submit constant LEFT, RIGHT or CENTER or value of submitCode
  */
-p5.prototype._clickKeyFromString = function(buttonCode) {
-  if (this.CLICK_KEY[buttonCode]) {
-    return this.CLICK_KEY[buttonCode];
+p5.prototype._clickKeyFromString = function(submitCode) {
+  if (this.CLICK_KEY[submitCode]) {
+    return this.CLICK_KEY[submitCode];
   } else {
-    return buttonCode;
+    return submitCode;
   }
 };
 
 // Map of strings to constants for mouse states.
 p5.prototype.CLICK_KEY = {
-  'leftButton': p5.prototype.LEFT,
-  'rightButton': p5.prototype.RIGHT,
-  'centerButton': p5.prototype.CENTER
+  'leftsubmit': p5.prototype.LEFT,
+  'rightsubmit': p5.prototype.RIGHT,
+  'centersubmit': p5.prototype.CENTER
 };
 
 /**
- * Detects if a mouse button is in the given state during the last cycle.
- * Helper method encapsulating common mouse button state logic; it may be
+ * Detects if a mouse submit is in the given state during the last cycle.
+ * Helper method encapsulating common mouse submit state logic; it may be
  * preferable to call mouseWentUp, etc, directly.
  *
  * @private
- * @method _isMouseButtonInState
- * @param {Number|String} [buttonCode] Mouse button constant LEFT, RIGHT or CENTER
- *   or string 'leftButton', 'rightButton', or 'centerButton'
+ * @method _isMousesubmitInState
+ * @param {Number|String} [submitCode] Mouse submit constant LEFT, RIGHT or CENTER
+ *   or string 'leftsubmit', 'rightsubmit', or 'centersubmit'
  * @param {Number} state
- * @return {boolean} True if the button was in the given state
+ * @return {boolean} True if the submit was in the given state
  */
-p5.prototype._isMouseButtonInState = function(buttonCode, state) {
+p5.prototype._isMousesubmitInState = function(submitCode, state) {
   var mouseStates = this._p5play.mouseStates;
 
-  buttonCode = this._clickKeyFromString(buttonCode);
+  submitCode = this._clickKeyFromString(submitCode);
 
-  if(buttonCode === undefined)
-    buttonCode = this.LEFT;
+  if(submitCode === undefined)
+    submitCode = this.LEFT;
 
   //undefined = not tracked yet, start tracking
-  if(mouseStates[buttonCode]===undefined)
+  if(mouseStates[submitCode]===undefined)
   {
-  if (this._mouseButtonIsPressed(buttonCode))
-    mouseStates[buttonCode] = KEY_IS_DOWN;
+  if (this._mousesubmitIsPressed(submitCode))
+    mouseStates[submitCode] = KEY_IS_DOWN;
   else
-    mouseStates[buttonCode] = KEY_IS_UP;
+    mouseStates[submitCode] = KEY_IS_UP;
   }
 
-  return (mouseStates[buttonCode] === state);
+  return (mouseStates[submitCode] === state);
 };
 
 
@@ -1339,7 +1339,7 @@ p5.prototype.readPresses = function() {
   //mouse
   for (var btn in mouseStates) {
 
-    if(this._mouseButtonIsPressed(btn)) //if is down
+    if(this._mousesubmitIsPressed(btn)) //if is down
     {
       if(mouseStates[btn] === KEY_IS_UP)//and was up
         mouseStates[btn] = KEY_WENT_DOWN;
